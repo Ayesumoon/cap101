@@ -25,11 +25,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["email"] = $db_email;
             $_SESSION["role"] = $role;
 
+            // **Update last_logged_in timestamp**
+            $updateLogin = "UPDATE adminusers SET last_logged_in = NOW() WHERE admin_id = ?";
+            $stmtUpdate = $conn->prepare($updateLogin);
+            $stmtUpdate->bind_param("i", $admin_id);
+            $stmtUpdate->execute();
+            $stmtUpdate->close();
+
             header("Location: dashboard.php"); // Redirect to admin dashboard
             exit;
         }
     }
-
     $stmt->close();
 
     // If not an admin, check if it's a customer
@@ -44,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->fetch();
 
         // Verify password for customer
-        if (password_verify($password, $db_password)) {
+        if (password_verify($password, $db_password_hash)) { // Fixed variable
             $_SESSION["loggedin"] = true;
             $_SESSION["user_id"] = $customer_id;
             $_SESSION["email"] = $db_email;

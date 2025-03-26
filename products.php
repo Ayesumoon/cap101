@@ -62,7 +62,6 @@ $conn->close();
 <body>
     <div class="sidebar">
         <h2>Products</h2>
-        <p>Welcome back, <?php echo isset($_SESSION['username']) ? $_SESSION['username'] : 'User'; ?>!</p>
         <nav>
             <ul>
                 <li><a href="dashboard.php">Dashboard</a></li>
@@ -73,7 +72,7 @@ $conn->close();
                 <li><a href="users.php">Users</a></li>
                 <li><a href="payandtransac.php">Payment & Transactions</a></li>
                 <li><a href="storesettings.php">Store Settings</a></li>
-                <li><a href="login.php">Log out</a></li>
+                <li><a href="logout.php">Log out</a></li>
             </ul>
         </nav>
     </div>
@@ -119,7 +118,7 @@ $conn->close();
                             <td><?php echo htmlspecialchars($product['product_name']); ?></td>
                             <td><?php echo htmlspecialchars($product['description']); ?></td>
                             <td><?php echo $product['product_id']; ?></td>
-                            <td>$<?php echo number_format($product['price'], 2); ?></td> <!-- Fixed price column -->
+                            <td>$<?php echo number_format($product['price_id'], 2); ?></td> <!-- Fixed price column -->
                             <td><?php echo htmlspecialchars($product['category_name']); ?></td>
                             <td><?php echo $product['stocks']; ?></td>
                             <td>
