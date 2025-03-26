@@ -37,6 +37,7 @@
         <table class="pay-table">
             <thead>
                 <tr>
+                    <th>Payment ID</th>
                     <th>Transaction ID</th>
                     <th>Order ID</th>
                     <th>Customer Name</th>

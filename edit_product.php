@@ -58,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Update product details
-    $update_sql = "UPDATE products SET product_name=?, description=?, price=?, category_id=?, stocks=?, image_url=? WHERE product_id=?";
+    $update_sql = "UPDATE products SET product_name=?, description=?, price_id=?, category_id=?, stocks=?, image_url=? WHERE product_id=?";
     $stmt = $conn->prepare($update_sql);
     if ($stmt) {
         $stmt->bind_param("ssdissi", $product_name, $description, $price, $category_id, $stocks, $image_url, $product_id);
@@ -95,7 +95,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <br>
 
             <label>Price:</label>
-            <input type="number" step="0.01" name="price" value="<?php echo $product['price']; ?>" required>
+            <input type="number" step="0.01" name="price" value="<?php echo $product['price_id']; ?>" required>
             <br>
 
             <label>Category:</label>

@@ -3,7 +3,18 @@
     require 'conn.php'; // Database connection
 
     $customers = [];
-    $sql = "SELECT customer_id, CONCAT(first_name, ' ', last_name) AS name, email, phone, status_id, created_at FROM customers";
+
+    // Fetch customers with status names
+    $sql = "
+        SELECT c.customer_id, 
+               CONCAT(c.first_name, ' ', c.last_name) AS name, 
+               c.email, 
+               c.phone, 
+               s.status_name, 
+               c.created_at 
+        FROM customers c
+        INNER JOIN status s ON c.status_id = s.status_id
+    ";
     $result = $conn->query($sql);
 
     if ($result === false) {
@@ -53,8 +64,6 @@
             <option value="active">Active</option>
             <option value="inactive">Inactive</option>
         </select>
-        <label for="date">Date:</label>
-        <input type="date" id="date">
         
         <table class="customer-table">
             <thead>
@@ -78,7 +87,9 @@
                             <td><?php echo $customer['name']; ?></td>
                             <td><?php echo $customer['email']; ?></td>
                             <td><?php echo $customer['phone']; ?></td>
-                            <td class="status_id <?php echo strtolower($customer['status_id']); ?>"><?php echo $customer['status_id']; ?></td>
+                            <td class="status <?php echo strtolower($customer['status_name']); ?>">
+                                <?php echo $customer['status_name']; ?>
+                            </td>
                             <td><?php echo $customer['created_at']; ?></td>
                             <td class="actions">
                                 <a href="#" class="view">View</a>
@@ -86,7 +97,7 @@
                         </tr>
                     <?php } 
                 } else { ?>
-                    <tr><td colspan="9" style="text-align: center;">No customers found</td></tr>
+                    <tr><td colspan="8" style="text-align: center;">No customers found</td></tr>
                 <?php } ?>
             </tbody>
         </table>

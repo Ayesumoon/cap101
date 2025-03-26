@@ -1,10 +1,28 @@
 <?php
     session_start();
-    // Sample order data
-    $orders = [
-        ["order_id" => "1001", "customer_id" => "C001", "products" => "Product A, Product B", "total" => "$120.00", "status" => "Pending", "payment" => "Credit Card", "date" => "2025-03-24"],
-        ["order_id" => "1002", "customer_id" => "C002", "products" => "Product C", "total" => "$45.00", "status" => "Shipped", "payment" => "PayPal", "date" => "2025-03-23"]
-    ];
+    require 'conn.php'; // Include database connection
+
+    $orders = [];
+    
+    // Fetch orders and product names by joining products table using product_id
+    $sql = "SELECT o.order_id, o.customer_id, p.product_name AS products, 
+                   o.total_amount, o.order_status_id, o.payment_method, o.created_at
+            FROM orders o
+            LEFT JOIN products p ON o.product_id = p.product_id"; // Assuming product_id is in orders table
+
+    $result = $conn->query($sql);
+
+    if ($result === false) {
+        die("Error in SQL query: " . $conn->error);
+    }
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $orders[] = $row;
+        }
+    }
+
+    $conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -58,20 +76,24 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($orders as $order) { ?>
-                    <tr>
-                        <td><?php echo $order['order_id']; ?></td>
-                        <td><?php echo $order['customer_id']; ?></td>
-                        <td><?php echo $order['products']; ?></td>
-                        <td><?php echo $order['total']; ?></td>
-                        <td class="status <?php echo strtolower($order['status']); ?>"><?php echo $order['status']; ?></td>
-                        <td><?php echo $order['payment']; ?></td>
-                        <td><?php echo $order['date']; ?></td>
-                        <td class="actions">
-                            <button class="view-button">View</button>
-                            <button class="update-button">Update</button>
-                        </td>
-                    </tr>
+                <?php if (!empty($orders)) { 
+                    foreach ($orders as $order) { ?>
+                        <tr>
+                            <td><?php echo $order['order_id']; ?></td>
+                            <td><?php echo $order['customer_id']; ?></td>
+                            <td><?php echo $order['products']; ?></td>
+                            <td><?php echo $order['total_amount']; ?></td>
+                            <td class="status <?php echo strtolower($order['order_status_id']); ?>"><?php echo $order['order_status_id']; ?></td>
+                            <td><?php echo $order['payment_method']; ?></td>
+                            <td><?php echo $order['created_at']; ?></td>
+                            <td class="actions">
+                                <button class="view-button">View</button>
+                                <button class="update-button">Update</button>
+                            </td>
+                        </tr>
+                    <?php } 
+                } else { ?>
+                    <tr><td colspan="8" style="text-align: center;">No orders found</td></tr>
                 <?php } ?>
             </tbody>
         </table>

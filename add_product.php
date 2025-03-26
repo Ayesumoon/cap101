@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // Insert into database
-        $sql = "INSERT INTO products (product_name, description, price, category_id, stocks, image_url) VALUES (?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO products (product_name, description, price_id, category_id, stocks, image_url) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
         if ($stmt) {
             $stmt->bind_param("ssdiss", $product_name, $description, $price, $category_id, $stocks, $image_url);
