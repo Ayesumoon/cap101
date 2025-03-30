@@ -84,7 +84,7 @@ $conn->close();
 
         <div class="filters">
             <form method="GET" action="products.php">
-            <label>Category: 
+            <label class="category">Category: 
     <select name="category" onchange="this.form.submit()">
         <option value="all">All</option>
         <?php foreach ($categories as $category) { ?>

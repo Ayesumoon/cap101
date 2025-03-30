@@ -30,9 +30,17 @@
     <div class="main-content">
         <h1>Payment & Transactions</h1>
         <div class="filters">
-            <select>
-                <option value="">Date:</option>
-            </select>
+        <select class="date">
+    <option value="">Select Date</option>
+    <?php
+    // Generate options for the last 7 days
+    for ($i = 0; $i < 7; $i++) {
+        $date = date("Y-m-d", strtotime("-$i days")); // Generate past dates
+        echo "<option value='$date'>$date</option>";
+    }
+    ?>
+</select>
+
         </div>
         <table class="pay-table">
             <thead>
