@@ -85,22 +85,22 @@ $conn->close();
                 <li><a href="users.php"><strong>Users</strong></a></li>
                 <li><a href="payandtransac.php">Payment & Transactions</a></li>
                 <li><a href="storesettings.php">Store Settings</a></li>
-                <li><a href="login.php">Log out</a></li>
+                <li><a href="logout.php">Log out</a></li>
             </ul>
         </nav>
     </div>
     <div class="main-content">
         <h2>Users</h2>
         <div class="filters">
-            <form method="GET" action="users.php">
+            <form method="GET" action="users.php" class="status">
                 <select name="status" onchange="this.form.submit()">
-                    <option value="">Status</option>
+                    <option value="">All Status</option>
                     <option value="active" <?php echo ($status_filter == "active") ? 'selected' : ''; ?>>Active</option>
                     <option value="inactive" <?php echo ($status_filter == "inactive") ? 'selected' : ''; ?>>Inactive</option>
                 </select>
                 <noscript><input type="submit" value="Filter"></noscript>
             </form>
-            <button class="add-user"><a href="add_user.php"> Add User</a></button>
+            <a href="add_user.php"class="add_user"> Add User</a>
         </div>
         <table class="users-table">
             <thead>

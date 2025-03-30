@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <label>Address:</label>
             <textarea name="address" required></textarea>
 
-            <button class="loginbtn"><a href="login.php">Log In</a></button>
+            <a href="login.php" class="loginbtn">Log In</a>
             
             <input type="submit" value="Sign Up">
             

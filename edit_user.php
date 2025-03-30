@@ -73,6 +73,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $types .= "i";
     }
 
+    // Handle password change
+    if (!empty($_POST['new_password']) || !empty($_POST['confirm_password'])) {
+        if ($_POST['new_password'] !== $_POST['confirm_password']) {
+            $_SESSION['message'] = "Passwords do not match!";
+            header("Location: edit_user.php?id=$admin_id");
+            exit();
+        } else {
+            $hashed_password = password_hash($_POST['new_password'], PASSWORD_DEFAULT);
+            $updates[] = "password_hash = ?";
+            $params[] = $hashed_password;
+            $types .= "s";
+        }
+    }
+
     // Only update if there are changes
     if (!empty($updates)) {
         $query = "UPDATE adminusers SET " . implode(", ", $updates) . " WHERE admin_id = ?";
@@ -125,6 +139,12 @@ $conn->close();
 
             <label>Email:</label>
             <input type="email" name="admin_email" value="<?php echo htmlspecialchars($user['admin_email']); ?>">
+
+            <label>New Password:</label>
+            <input type="password" name="new_password">
+
+            <label>Confirm Password:</label>
+            <input type="password" name="confirm_password">
             
             <label>Role:</label>
             <select name="role_id">

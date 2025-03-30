@@ -1,22 +1,26 @@
 <?php
 session_start();
-require 'conn.php'; // Database connection
+require 'conn.php';
 
 if (isset($_SESSION["user_id"])) {
-    $admin_id = $_SESSION["user_id"];
+    $user_id = $_SESSION["user_id"];
 
-    // **Update last_logged_out timestamp**
+    // Prepare and execute the update query for last_logged_out
     $updateLogout = "UPDATE adminusers SET last_logged_out = NOW() WHERE admin_id = ?";
-    $stmt = $conn->prepare($updateLogout);
-    $stmt->bind_param("i", $admin_id);
-    $stmt->execute();
-    $stmt->close();
+    if ($stmtLogout = $conn->prepare($updateLogout)) {
+        $stmtLogout->bind_param("i", $user_id);
+        $stmtLogout->execute();
+        $stmtLogout->close();
+    } else {
+        error_log("Logout Error: " . $conn->error); // Log errors for debugging
+    }
 }
 
-// Destroy session and redirect
+// Destroy the session
 session_unset();
 session_destroy();
 
+// Redirect to login page
 header("Location: login.php");
 exit;
 ?>

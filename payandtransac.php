@@ -23,7 +23,7 @@
                 <li><a href="users.php">Users</a></li>
                 <li><strong><a href="payandtransac.php">Payment & Transactions</a></strong></li>
                 <li><a href="storesettings.php">Store Settings</a></li>
-                <li><a href="login.php">Log out</a></li>
+                <li><a href="logout.php">Log out</a></li>
             </ul>
         </nav>
     </div>
@@ -37,7 +37,6 @@
         <table class="pay-table">
             <thead>
                 <tr>
-                    <th>Payment ID</th>
                     <th>Transaction ID</th>
                     <th>Order ID</th>
                     <th>Customer Name</th>

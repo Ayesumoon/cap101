@@ -77,7 +77,7 @@
                 <li><a href="users.php">Users</a></li>
                 <li><a href="payandtransac.php">Payment & Transactions</a></li>
                 <li><a href="storesettings.php">Store Settings</a></li>
-                <li><a href="login.php">Log out</a></li>
+                <li><a href="logout.php">Log out</a></li>
             </ul>
         </nav>
     </div>
@@ -123,7 +123,7 @@
                             <td><?php echo $item['product_name']; ?></td>
                             <td><?php echo $item['category_name']; ?></td>
                             <td><?php echo $item['stocks']; ?></td>
-                            <td>$<?php echo number_format($item['price_id'], 2); ?></td>
+                            <td>₱<?php echo number_format($item['price_id'], 2); ?></td>
                             <td><?php echo $status; ?></td>
                             <td class="actions"><a href="#">Restock</a></td>
                         </tr>

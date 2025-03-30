@@ -10,8 +10,8 @@ body {
     height: 100vh;
 }
 
-/* Main Container */
-.container {
+/* Main Content Container */
+.main-content {
     background: #fff;
     padding: 20px;
     width: 400px;
@@ -30,19 +30,17 @@ h2 {
 form {
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
 
 /* Labels */
 label {
     font-weight: bold;
     text-align: left;
-    width: 100%;
     margin: 10px 0 5px;
 }
 
-/* Inputs & Select Dropdowns */
-input, select {
+/* Inputs & Textarea */
+input, select, textarea {
     padding: 10px;
     font-size: 14px;
     border: 1px solid #ccc;
@@ -51,8 +49,18 @@ input, select {
     box-sizing: border-box;
 }
 
-/* Buttons */
-button {
+textarea {
+    height: 80px;
+    resize: none;
+}
+
+/* File Input */
+input[type="file"] {
+    padding: 5px;
+}
+
+/* Submit Button */
+input[type="submit"] {
     background-color: #007BFF;
     color: white;
     border: none;
@@ -61,24 +69,21 @@ button {
     border-radius: 5px;
     cursor: pointer;
     margin-top: 15px;
-    width: 100%;
 }
 
-button:hover {
+input[type="submit"]:hover {
     background-color: #0056b3;
 }
 
-/* Cancel Button */
-button[type="button"] {
-    background-color: #dc3545;
-}
-
-button[type="button"]:hover {
-    background-color: #c82333;
-}
-
-/* Error Message */
-p {
-    color: red;
+/* Back to Products Link */
+a {
+    display: inline-block;
+    margin-top: 15px;
+    text-decoration: none;
+    color: #007BFF;
     font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
 }

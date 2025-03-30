@@ -5,37 +5,36 @@ require 'conn.php'; // Database connection
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["email"];
     $password = $_POST["password"];
-    $error = "Invalid email or password."; // Default error message
 
-    // First, check if the user is an Admin
-    $sql = "SELECT admin_id, admin_email, password_hash, role_id FROM adminusers WHERE admin_email = ?";
+    $sql = "SELECT admin_id, admin_email, password_hash, role_id, username FROM adminusers WHERE admin_email = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $stmt->store_result();
 
     if ($stmt->num_rows > 0) {
-        $stmt->bind_result($admin_id, $db_email, $db_password, $role);
+        $stmt->bind_result($admin_id, $db_email, $db_password, $role, $username);
         $stmt->fetch();
 
-        // Verify password for admin
         if (password_verify($password, $db_password)) {
             $_SESSION["loggedin"] = true;
             $_SESSION["user_id"] = $admin_id;
             $_SESSION["email"] = $db_email;
             $_SESSION["role"] = $role;
+            $_SESSION["username"] = $username; // Store username in session
 
-            // **Update last_logged_in timestamp**
+            // Update last_logged_in timestamp
             $updateLogin = "UPDATE adminusers SET last_logged_in = NOW() WHERE admin_id = ?";
             $stmtUpdate = $conn->prepare($updateLogin);
             $stmtUpdate->bind_param("i", $admin_id);
             $stmtUpdate->execute();
             $stmtUpdate->close();
 
-            header("Location: dashboard.php"); // Redirect to admin dashboard
+            header("Location: dashboard.php");
             exit;
         }
     }
+    
     $stmt->close();
 
     // If not an admin, check if it's a customer
@@ -55,6 +54,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["user_id"] = $customer_id;
             $_SESSION["email"] = $db_email;
             $_SESSION["role"] = "Customer";
+
+            // Reset last_logged_out when logging in
+            $resetLogout = "UPDATE adminusers SET last_logged_out = NULL WHERE admin_id = ?";
+            $stmtReset = $conn->prepare($resetLogout);
+            $stmtReset->bind_param("i", $admin_id);
+            $stmtReset->execute();
+            $stmtReset->close();
+
 
             header("Location: customer_home.php"); // Redirect to customer page
             exit;
