@@ -12,6 +12,7 @@
 <body>
     <div class="sidebar">
         <h2>Dashboard</h2>
+        <p>Welcome back, <?php echo isset($_SESSION['username']) ? $_SESSION['username'] : 'User'; ?>!</p>
         <nav>
             <ul>
                 <li><a href="dashboard.php">Dashboard</a></li>
@@ -22,7 +23,7 @@
                 <li><a href="users.php">Users</a></li>
                 <li><a href="payandtransac.php">Payment & Transactions</a></li>
                 <li><strong><a href="storesettings.php">Store Settings</a></strong></li>
-                <li><a href="logout.php">Log out</a></li>
+                <li><a href="login.php">Log out</a></li>
             </ul>
         </nav>
     </div>

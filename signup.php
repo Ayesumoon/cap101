@@ -27,32 +27,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
 </head>
+    <link rel="stylesheet" href="signup.css">
+</head>
+</head>
 <body>
+    <img src="logo.png" alt="Seven Dwarfs Logo" class="w-50 h-50"/>
+</head>
+<body>
+    <div class="maincontent">
     <h2>Sign Up</h2>
-    <form method="post">
-        <label>First Name:</label>
-        <input type="text" name="first_name" required>
-        <br>
-        <label>Last Name:</label>
-        <input type="text" name="last_name" required>
-        <br>
-        <label>Email:</label>
-        <input type="email" name="email" required>
-        <br>
-        <label>Phone:</label>
-        <input type="text" name="phone" required>
-        <br>
-        <label>Password:</label>
-        <input type="password" name="password" required>
-        <br>
-        <label>Address:</label>
-        <textarea name="address" required></textarea>
-        <br>
-        <input type="submit" value="Sign Up">
-    </form>
+        <form method="post">
+            <label>First Name:</label>
+            <input type="text" name="first_name" required>
+            
+            <label>Last Name:</label>
+            <input type="text" name="last_name" required>
+            
+            <label>Email:</label>
+            <input type="email" name="email" required>
+            
+            <label>Phone:</label>
+            <input type="text" name="phone" required>
+            
+            <label>Password:</label>
+            <input type="password" name="password" required>
+            
+            <label>Address:</label>
+            <textarea name="address" required></textarea>
+
+            <button class="loginbtn"><a href="login.php">Log In</a></button>
+            
+            <input type="submit" value="Sign Up">
+            
+        </form>
+    </div>
 </body>
 </html>
+

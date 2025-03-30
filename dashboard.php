@@ -1,26 +1,5 @@
 <?php
-session_start();
-require 'conn.php'; // Database connection
-
-$username = "User"; // Default username if not found
-
-if (isset($_SESSION['admin_id'])) {
-    $adminId = $_SESSION['admin_id'];
-
-    // Fetch username from adminusers table
-    $sqlUser = "SELECT username FROM adminusers WHERE admin_id = ?";
-    $stmtUser = $conn->prepare($sqlUser);
-    $stmtUser->bind_param("i", $userId);
-    $stmtUser->execute();
-    $resultUser = $stmtUser->get_result();
-
-    if ($resultUser->num_rows > 0) {
-        $row = $resultUser->fetch_assoc();
-        $username = htmlspecialchars($row['username']); // Prevent XSS
-    }
-
-    $stmtUser->close();
-}
+    session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,7 +12,7 @@ if (isset($_SESSION['admin_id'])) {
 <body>
     <div class="sidebar">
         <h2>Dashboard</h2>
-        <p>Welcome back, <?php echo $username; ?>!</p>
+        <p>Welcome back, <?php echo isset($_SESSION['username']) ? $_SESSION['username'] : 'User'; ?>!</p>
         <nav>
             <ul>
                 <li><a href="dashboard.php"><strong>Dashboard</strong></a></li>
@@ -44,7 +23,7 @@ if (isset($_SESSION['admin_id'])) {
                 <li><a href="users.php">Users</a></li>
                 <li><a href="payandtransac.php">Payment & Transactions</a></li>
                 <li><a href="storesettings.php">Store Settings</a></li>
-                <li><a href="logout.php">Log out</a></li>
+                <li><a href="login.php">Log out</a></li>
             </ul>
         </nav>
     </div>
